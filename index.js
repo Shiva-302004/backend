@@ -44,7 +44,7 @@ app.post("/uploadimage", upload.single('product'), (req, res) => {
     res.status(201).json({
         "msg": "image uploaded successfully",
         "success": true,
-        "image_url": `http://localhost:8000/images/${req.file.filename}`
+        "image_url": `${process.env.SERVER}/images/${req.file.filename}`
     })
 })
 
@@ -64,6 +64,7 @@ app.post("/addproduct", async (req, res) => {
         if(name.length>=7){  
         const product = new modelproduct({ id: id, name, new_price, old_price, image, category, available })
         const new_product = await product.save()
+        console.log(new_product)
         res.status(201).json({
             success: "true",
             msg: "new product added",
